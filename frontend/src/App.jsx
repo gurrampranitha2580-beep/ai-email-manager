@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
+import ProtectedRoute from './components/auth/ProtectedRoute.jsx';
 import AppShell from './components/layout/AppShell.jsx';
 import Activity from './pages/Activity.jsx';
 import Compose from './pages/Compose.jsx';
@@ -17,13 +18,15 @@ export default function App() {
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
 
-      <Route element={<AppShell />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/inbox" element={<Inbox />} />
-        <Route path="/email/:id" element={<EmailDetails />} />
-        <Route path="/compose" element={<Compose />} />
-        <Route path="/activity" element={<Activity />} />
-        <Route path="/settings" element={<Settings />} />
+      <Route element={<ProtectedRoute />}>
+        <Route element={<AppShell />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/inbox" element={<Inbox />} />
+          <Route path="/email/:id" element={<EmailDetails />} />
+          <Route path="/compose" element={<Compose />} />
+          <Route path="/activity" element={<Activity />} />
+          <Route path="/settings" element={<Settings />} />
+        </Route>
       </Route>
 
       <Route path="*" element={<NotFound />} />
