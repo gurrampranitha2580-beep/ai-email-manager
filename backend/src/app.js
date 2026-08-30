@@ -7,10 +7,15 @@ import { env } from './config/env.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import healthRoutes from './routes/healthRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import emailRoutes from './routes/emailRoutes.js';
+import threadRoutes from './routes/threadRoutes.js';
+import activityRoutes from './routes/activityRoutes.js';
 
 export function createApp() {
   const app = express();
 
+  app.set('trust proxy', 1);
   app.use(helmet());
   app.use(
     cors({
@@ -24,6 +29,10 @@ export function createApp() {
 
   app.use('/api', apiLimiter);
   app.use('/api', healthRoutes);
+  app.use('/api', authRoutes);
+  app.use('/api', emailRoutes);
+  app.use('/api', threadRoutes);
+  app.use('/api', activityRoutes);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
